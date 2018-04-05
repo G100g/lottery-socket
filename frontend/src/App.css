@@ -1,0 +1,16 @@
+.playerContainer {
+    transition: background-color 0.2s ease-out;
+    background-color: white;
+}
+
+.winner {
+    background-color: green;
+}
+
+.looser {
+    background-color: red;
+}
+
+.current {
+    background-color: yellow;
+}
