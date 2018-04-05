@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "dev": "nodemon index.js",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node index.js",
+        "build-frontend": "cd frontend && npm i && npm run build",
+        "build": "npm run build-frontend"
     },
     "keywords": [],
     "author": "",
@@ -17,5 +19,13 @@
     },
     "devDependencies": {
         "nodemon": "^1.17.2"
+    },
+    "now": {
+        "alias": "lottery",
+        "public": true,
+        "env": {
+            "NODE_ENV": "production",
+            "PORT": 80
+        }
     }
 }

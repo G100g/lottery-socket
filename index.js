@@ -1,15 +1,18 @@
 // @ts-check
 
-var app = require("express")();
+var express = require("express");
+var app = express();
 var http = require("http").Server(app);
 var io = require("socket.io")(http, {
     path: "/lottery"
 });
 const TWEEN = require("tween.js");
 
-app.get("/", function(req, res) {
-    res.send("<h1>Hello world</h1>");
-});
+// app.get("/", function(req, res) {
+//     res.send("<h1>Hello world</h1>");
+// });
+
+app.use("/", express.static("frontend/build"));
 
 let connectedClients = {};
 
