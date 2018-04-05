@@ -11,31 +11,25 @@ app.get("/", function(req, res) {
     res.send("<h1>Hello world</h1>");
 });
 
-let numbers = new Set();
+let connectedClients = {};
 
 io.on("connection", function(socket) {
-    // console.log(socket);
+    if (!socket.handshake.query.dealer) {
+        console.log("I'm a player");
+        connectedClients[socket.id] = Math.round(Math.random() * 500);
+        io.emit("updatelist", connectedClients);
+    } else {
+        console.log("I'm the dealer");
+    }
 
-    numbers.add(socket.id);
-
-    io.emit("updatelist", [...numbers]);
     io.emit("countdown", countdown);
 
-    console.log(numbers);
-
-    console.log(`a user connected ${socket.id}`);
     socket.on("disconnect", function() {
-        console.log("user disconnected");
-        numbers.delete(socket.id);
-        io.emit("updatelist", [...numbers]);
-    });
-
-    socket.on("reset", function() {
-        console.log("Reset");
+        delete connectedClients[socket.id];
+        io.emit("updatelist", connectedClients);
     });
 
     socket.on("start", function() {
-        console.log("Start", arguments);
         io.emit("startCounting");
         startCount();
     });
@@ -52,12 +46,8 @@ function startCount() {
     countdown = 5;
     counting = true;
 
-    console.log("StartCount");
-
     // const extractionDuration = 18100;
     const extractionDuration = 3000;
-
-    // io.emit("start");
 
     T = new TWEEN.Tween({
         pos: 0
@@ -70,25 +60,22 @@ function startCount() {
 
     T.easing(TWEEN.Easing.Exponential.InOut);
 
-    const partecipants = numbers.size;
+    const partecipants = Object.keys(connectedClients);
 
     T.onUpdate(function(delta) {
-        console.log(partecipants);
-
         const pos = Math.ceil(this.pos);
 
-        console.log(pos);
-        console.log(pos % partecipants);
+        // console.log(pos);
+        // console.log(pos % partecipants);
 
-        io.emit("countdown", pos % partecipants);
+        io.emit("countdown", partecipants[pos % partecipants.length]);
     });
 
     T.onComplete(() => {
-        console.log("End");
         clearInterval(ST);
         counting = false;
         io.emit("result", {
-            winner: shuffle([...numbers])[0]
+            winner: shuffle(Object.keys(connectedClients))[0]
         });
     });
 
@@ -100,20 +87,6 @@ function startCount() {
 
 function animate() {
     TWEEN.update();
-}
-
-function count() {
-    countdown--;
-
-    if (countdown < 0) {
-        countdown = 5;
-        io.emit("result", {
-            winner: shuffle([...numbers])[0]
-        });
-    } else {
-        io.emit("countdown", countdown);
-        ST = setTimeout(count, 1000);
-    }
 }
 
 function shuffle(originalArray) {

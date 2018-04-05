@@ -1,16 +1,41 @@
-.playerContainer {
+html,
+body {
+    height: 100%;
+}
+
+.player-deck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8ab09;
+    color: #e90c05;
     transition: background-color 0.2s ease-out;
+
+    font-size: 6vw;
+    text-align: center;
+    line-height: 1rem;
+}
+
+.player-deck__number {
+    font-weight: bold;
+    font-size: 20vw;
+    background: rgba(255, 255, 255, 0.3);
+    line-height: 100%;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.player-deck--winner {
+    background-color: #b9bc04;
+    color: white;
+}
+
+.player-deck--looser {
+    background-color: #b71602;
+    color: white;
+}
+
+.player-deck--current {
     background-color: white;
-}
-
-.winner {
-    background-color: green;
-}
-
-.looser {
-    background-color: red;
-}
-
-.current {
-    background-color: yellow;
 }
