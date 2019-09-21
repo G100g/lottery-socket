@@ -1,41 +1,108 @@
 html,
 body {
-    height: 100%;
+  height: 100%;
+}
+
+.player-deck,
+.dealer-deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8ab09;
+  color: #e90c05;
+  transition: background-color 0.2s ease-out;
+  padding: 5vh;
+  height: 100vh;
 }
 
 .player-deck {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8ab09;
-    color: #e90c05;
-    transition: background-color 0.2s ease-out;
-
-    font-size: 6vw;
-    text-align: center;
-    line-height: 1rem;
+  justify-content: center;
 }
 
-.player-deck__number {
-    font-weight: bold;
-    font-size: 20vw;
-    background: rgba(255, 255, 255, 0.3);
-    line-height: 100%;
-    border-radius: 1rem;
-    padding: 2rem;
+.dealer-deck {
+  justify-content: space-between;
+  background-color: rebeccapurple;
+  color: white;
+}
+
+.dealer-deck.is-winner {
+  background-color: #b9bc04;
+  color: whitesmoke;
+}
+
+.player-deck__box,
+.dealer-deck__box {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  padding: 5vh;
+  display: flex;
+  margin-bottom: 5vh;
+  height: 60vh;
+  width: 60vh;
+}
+
+.is-winner .dealer-deck__box {
+  animation: pulsing 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.qr-code {
+  width: 100%;
+  height: 100%;
+}
+
+.player-deck__box__number,
+.dealer-deck__box__number {
+  padding: 50% 0;
+  width: 100%;
+  line-height: 0;
+  font-size: 9rem;
+  text-align: center;
+}
+
+@keyframes pulsing {
+  0% {
+    transform: scale(1);
+  }
+
+  30% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.start-btn {
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: inherit;
+  appearance: none;
+  padding: 2.5vh;
+  font-size: 6vh;
+  line-height: 6vh;
+  color: inherit;
+  background-color: goldenrod;
+  border: none;
+  margin-bottom: 4vh;
+}
+
+.player-deck__text,
+.deler-deck__text {
+  font-size: 8vh;
+  line-height: 8vh;
 }
 
 .player-deck--winner {
-    background-color: #b9bc04;
-    color: white;
+  background-color: #b9bc04;
+  color: white;
 }
 
 .player-deck--looser {
-    background-color: #b71602;
-    color: white;
+  background-color: #b71602;
+  color: white;
 }
 
 .player-deck--current {
-    background-color: white;
+  background-color: white;
 }
